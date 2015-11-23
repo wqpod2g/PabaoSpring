@@ -26,6 +26,7 @@
 
    <!-- List of XML mapping files -->
    <mapping resource="nju/iip/dto/Post.hbm.xml"/>
+    <mapping resource="nju/iip/dto/WeixinUser.hbm.xml"/>
    
 </session-factory>
 </hibernate-configuration>

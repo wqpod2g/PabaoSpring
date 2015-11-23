@@ -12,7 +12,7 @@ $(document).ready(function() {
 		          if(nScrollTop>=docHeight-winHeight) {
 		        	  $.ajax({
 							type : 'POST',
-							url : "GetMorePostsServlet",
+							url : "GetMorePosts",
 							data : {
 								"count" : count
 							},
@@ -61,7 +61,7 @@ $(document).ready(function() {
 		        	$("div#contain").append(content);
 		        	 $("div.bgfff").click(function() {
 			  				var postId = $(this).attr("id");
-			  				location.href = "ShowPostServlet?id=" + postId;
+			  				location.href = "ShowPost?id=" + postId;
 			  		});
 		        	
 		        }
@@ -69,7 +69,7 @@ $(document).ready(function() {
 
 			$("div.bgfff").click(function() {
 				var postId = $(this).attr("id");
-				location.href = "ShowPostServlet?id=" + postId;
+				location.href = "ShowPost?id=" + postId;
 			});
 			
 			
