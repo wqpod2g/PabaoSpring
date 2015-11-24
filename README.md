@@ -1,2 +1,2 @@
 # PabaoSpring
-Spring+Hibernate重写帕宝项目！
+Spring+Hibernate重构帕宝项目！
