@@ -36,7 +36,7 @@ public class OAuthService {
 			if(snsUserInfo==null) {
 				logger.info("需要获取用户信息");
 				// 获取网页授权access_token
-				WeixinOauth2Token weixinOauth2Token = AdvancedUtil.getOauth2AccessToken(Config.getValue("appID"), Config.getValue("appsecret"), code);
+				WeixinOauth2Token weixinOauth2Token = AdvancedUtil.getOauth2AccessToken(Config.getValue("appID"), Config.getValue("appsecret"), code+"");
 				String accessToken = weixinOauth2Token.getAccessToken();
 				// 用户标识
 				String openId = weixinOauth2Token.getOpenId();

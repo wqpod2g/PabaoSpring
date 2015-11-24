@@ -21,7 +21,7 @@ public class PostDao extends DAO{
 		List<Post> list = null;
 		try{
 			begin();
-			Query query = getSession().createQuery("from Post where isUp=0").setFirstResult(n).setMaxResults(10);
+			Query query = getSession().createQuery("from Post where isUp=0 order by id desc").setFirstResult(n).setMaxResults(10);
 			list = query.list();
 		}catch (HibernateException e) {
 			rollback();
@@ -67,6 +67,22 @@ public class PostDao extends DAO{
 			logger.info("PostDao-->getPostById",e);
 		}
 		return post;
+	}
+	
+	
+	/**
+	 * 保存帖子
+	 * @param post
+	 */
+	public void savePost(Post post) {
+		try{
+			begin();
+			getSession().save(post);
+			commit();
+		}catch (HibernateException e) {
+			rollback();
+			logger.info("PostDao-->savePost",e);
+		}
 	}
 
 }

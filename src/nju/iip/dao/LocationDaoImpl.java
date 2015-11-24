@@ -21,10 +21,10 @@ import nju.iip.util.DBConnection;
  */
 public class LocationDaoImpl {
 	
-	 private Connection conn  = null;
-	 private Statement sm = null;
-	 private ResultSet rs = null;
-	 private PreparedStatement ps = null;
+	 private Connection conn;
+	 private Statement sm;
+	 private ResultSet rs;
+	 private PreparedStatement ps;
 	 
 	 
 	    /**

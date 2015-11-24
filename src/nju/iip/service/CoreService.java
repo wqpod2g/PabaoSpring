@@ -2,12 +2,16 @@
 
 import java.util.Date;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
+import nju.iip.dao.LocationDao;
+import nju.iip.dto.TextMessage;
+import nju.iip.dto.UserLocation;
+import nju.iip.util.MessageUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import nju.iip.dao.LocationDaoImpl;
-import nju.iip.dto.TextMessage;
-import nju.iip.util.MessageUtil;
 
 /** 
  * 核心服务类 
@@ -122,19 +126,14 @@ public class CoreService {
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_LOCATION)){
                 	String Latitude = requestMap.get("Latitude");
                 	String Longitude = requestMap.get("Longitude");
-                	LocationDaoImpl LD = new LocationDaoImpl();
-                	if(!LD.isLocated(fromUserName)) {
-                		LD.locationUser(Latitude, Longitude, fromUserName);
-                	}
-                	else {
-                		LD.updateUserLocation(Latitude, Longitude, fromUserName);
-					}
-                	//respContent = "您的坐标为："+Latitude+"\n"+Longitude;
+                	UserLocation location = new UserLocation();
+                	location.setLatitude(Latitude);
+                	location.setLongitude(Longitude);
+                	location.setOpenId(fromUserName);
+                	LocationDao LD = new LocationDao();
+                	LD.updateUserLocation(location);
                 	logger.info(fromUserName+"进入了公众号坐标为: "+Latitude+" "+Longitude);
                 }
-                
-                
-                
             }  
             textMessage.setContent(respContent);  
             respMessage = MessageUtil.textMessageToXml(textMessage);  

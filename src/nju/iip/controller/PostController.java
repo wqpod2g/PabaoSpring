@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 import nju.iip.dao.PostDao;
 import nju.iip.dto.Post;
+import nju.iip.dto.WeixinUser;
 import nju.iip.service.OAuthService;
+import nju.iip.util.CommonUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +63,20 @@ public class PostController {
 		request.setAttribute("post", post);
 		request.getSession().setAttribute("postId", postId);
 		return "post.jsp";
+	}
+	
+	@RequestMapping(value = "/SavePost")
+	public void savePost(HttpServletRequest request,HttpServletResponse response,Post post) throws IOException {
+		logger.info("savePost called");
+		logger.info("title=" +post.getTitle() + " content=" + post.getContent()+" picture_url="+post.getPictureUrl());
+		WeixinUser user = (WeixinUser) request.getSession().getAttribute("snsUserInfo");
+		post.setAuthor(user.getNickname());
+		post.setHeadImgUrl(user.getHeadImgUrl());
+		post.setPostTime(CommonUtil.getTime());
+		post.setOpenId(user.getOpenId());
+		PD.savePost(post);
+		PrintWriter out = response.getWriter();
+		out.write("发帖成功!");
 	}
 
 }

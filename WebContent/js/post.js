@@ -148,7 +148,7 @@ $(document).ready(function() {
 						
 						$.ajax({
 							type : 'POST',
-							url : "ReceivePostServlet",
+							url : "SavePost",
 							data : {
 								"title" : title,
 								"content" : content,
