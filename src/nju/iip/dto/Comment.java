@@ -7,11 +7,13 @@ package nju.iip.dto;
  */
 public class Comment {
 	
+	private int id;
+
 	//评论对应的postId
 	private int postId;
 	
 	//评论内容
-	private String comment_content;
+	private String comment;
 	
 	//评论人的微信名
 	private String author;
@@ -25,6 +27,13 @@ public class Comment {
 	//发帖人的openId
 	private String openId;
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public int getPostId() {
 		return postId;
@@ -42,12 +51,13 @@ public class Comment {
 		this.openId = openId;
 	}
 
-	public String getComment_content() {
-		return comment_content;
+
+	public String getComment() {
+		return comment;
 	}
 
-	public void setComment_content(String comment_content) {
-		this.comment_content = comment_content;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public String getAuthor() {

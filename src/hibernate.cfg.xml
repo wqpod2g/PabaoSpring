@@ -13,21 +13,22 @@
 
    <!-- Assume test is the database name -->
    <property name="hibernate.connection.url">
-      jdbc:mysql://114.212.80.14/pabao
+      jdbc:mysql://rdsvm4pkvrd6ep4fse3n.mysql.rds.aliyuncs.com:3306/rjk08t3cj70wnkw6
    </property>
    <property name="hibernate.connection.username">
-      root
+      rjk08t3cj70wnkw6
    </property>
    <property name="hibernate.connection.password">
-      iip
+      iipconfig
    </property>
    
-   <property name="hibernate.show_sql">true</property><!-- 配置显示sql语句 -->
 
    <!-- List of XML mapping files -->
    <mapping resource="nju/iip/dto/Post.hbm.xml"/>
    <mapping resource="nju/iip/dto/WeixinUser.hbm.xml"/>
-    <mapping resource="nju/iip/dto/UserLocation.hbm.xml"/>
+   <mapping resource="nju/iip/dto/UserLocation.hbm.xml"/>
+   <mapping resource="nju/iip/dto/Comment.hbm.xml"/>
+   <mapping resource="nju/iip/dto/Love.hbm.xml"/>
    
 </session-factory>
 </hibernate-configuration>

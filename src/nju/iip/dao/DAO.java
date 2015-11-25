@@ -44,13 +44,7 @@ public class DAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected void rollback() {
-		try {
-			getSession().beginTransaction().rollback();
-		}catch(HibernateException e) {
-			logger.info("rollback failed!",e);
-		}
-		
+	protected void close() {
 		try {
 			getSession().close();
 		}catch(HibernateException e) {
@@ -58,6 +52,16 @@ public class DAO {
 		}
 		
 		DAO.SESSION_LOCAL.set(null);
+	}
+	
+	
+	protected void rollback() {
+		try {
+			getSession().beginTransaction().rollback();
+		}catch(HibernateException e) {
+			logger.info("rollback failed!",e);
+		}
+		
 	}
 	
 	

@@ -1,7 +1,7 @@
 ﻿<%@ page language="java" pageEncoding="utf-8"%>
 <%@ page import="nju.iip.dto.Post"%>
 <%@ page import="nju.iip.dto.Comment"%>
-<%@ page import="nju.iip.dao.PostDaoImpl"%>
+<%@ page import="nju.iip.dao.PostDao"%>
 <%@ page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
@@ -23,12 +23,13 @@
 <body>
 
 	<%
+	 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
 		Post post = (Post) request.getAttribute("post");
-	    PostDaoImpl PDI = new PostDaoImpl();
-		List<Comment> comment_list = PDI.getAllComment(post.getId());
+	    PostDao postdao = new PostDao();
+		List<Comment> comment_list = postdao.getAllComment(post.getId());
 		String openId = (String)request.getSession().getAttribute("openId");
 		int postId = post.getId();
-		boolean isLoved = PDI.isLove(openId, postId);
+		boolean isLoved = postdao.isLove(openId, postId);
 	%>
 
 	<div class="bgfff form ov">
@@ -44,7 +45,7 @@
 		<div>
 			<font size="3px"><%=post.getContent()%></font><br>
 			<%if(post.getPictureUrl()!=null) {
-				String url = "http:/114.212.80.14/Pictures/images/upload/"+post.getPictureUrl();
+				String url = basePath+"/Pictures/images/upload/"+post.getPictureUrl();
 			%>
 			<img src=<%=url%> width="80%" />
 			<% }%>
@@ -88,7 +89,7 @@
 		</table>
 		<hr style="border: 0; height: 0.1px;" />
 		<div>
-			<font size="3px"><%=comment.getComment_content()%></font>
+			<font size="3px"><%=comment.getComment()%></font>
 		</div>
 		<hr />
 		<div>
@@ -160,7 +161,7 @@
 			if($("span.glyphicon").hasClass("glyphicon-heart-empty")) {
 				$("span.glyphicon").removeClass("glyphicon-heart-empty");
 				$("span.glyphicon").addClass("glyphicon-heart");
-				$.get("AddLikeServlet?id="+<%=post.getId()%>,function(data,status){
+				$.get("AddLike?id="+<%=post.getId()%>,function(data,status){
 				      //alert("状态：" + status);
 			    });
 				var n=$("font#love").text();

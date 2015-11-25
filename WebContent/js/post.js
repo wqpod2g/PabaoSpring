@@ -1,6 +1,7 @@
 $(document).ready(function() {
 			
-	var pic_server_url = "http://114.212.80.14/Pictures/"
+	       	var basePath = window.location.protocol+"//"+window.location.host;
+	       	var pic_server_url = basePath+"/Pictures/"
 			var count = 1;
 			
 			var winHeight = $(window).height();
@@ -75,7 +76,7 @@ $(document).ready(function() {
 			
 			 var reader = new FileReader();
 			    var picture = '';
-			    var picture_url = "";
+			    var pictureUrl = "";
 			    $('input#upload').change(function(){
 			    	 if (this.files && this.files[0]) {
 			             // reader.readAsDataURL(this.files[0]);
@@ -105,7 +106,6 @@ $(document).ready(function() {
 			    	        done: function (results) {
 			    	              // 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
 			    	              console.log(results); 
-			    	              $("img#pic").attr('src', results.base64).addClass("img-thumbnail");
 			    	              picture =  results.base64;
 			    	              $.ajax({
 			    	            	  type: "POST",
@@ -114,7 +114,8 @@ $(document).ready(function() {
 			    	            		  "picture" : picture
 			    	            	  },
 			    	            	  success: function(msg) {
-			    	            		  picture_url = msg;
+			    	            		  pictureUrl = msg;
+			    	            		  $("img#pic").attr('src', results.base64).addClass("img-thumbnail");
 			    	            	  }
 			    	            	  
 			    	              });
@@ -152,7 +153,7 @@ $(document).ready(function() {
 							data : {
 								"title" : title,
 								"content" : content,
-								"picture_url" : picture_url
+								"pictureUrl" : pictureUrl
 							},
 							success : function(msg) {
 								$("div#progress-bar").html("100%").attr("aria-valuenow","100").attr("style","width:100%;");

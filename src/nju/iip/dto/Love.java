@@ -8,7 +8,9 @@ package nju.iip.dto;
  */
 public class Love {
 	
+	private int id;
 	
+
 	//对应的postId
 	private int postId;
 	
@@ -23,6 +25,14 @@ public class Love {
 	
 	//点赞时间
 	private String loveTime;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getPostId() {
 		return postId;

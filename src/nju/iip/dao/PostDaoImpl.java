@@ -14,7 +14,7 @@ import nju.iip.dto.Post;
 import nju.iip.util.DBConnection;
 
 /**
- * 与发帖有关的数据库操�?
+ * 与发帖有关的数据库操�?
  * 
  * @author wangqiang
  * 
@@ -27,7 +27,7 @@ public class PostDaoImpl {
 	private PreparedStatement ps = null;
 
 	/**
-	 * 添加�?��帖子
+	 * 添加�?��帖子
 	 * 
 	 * @param post
 	 * @return
@@ -57,7 +57,7 @@ public class PostDaoImpl {
 	}
 
 	/**
-	 * 获得�?��非置顶帖�?
+	 * 获得�?��非置顶帖�?
 	 * 
 	 * @return
 	 */
@@ -90,7 +90,7 @@ public class PostDaoImpl {
 	}
 
 	/**
-	 * 获得�?��非置顶帖�?
+	 * 获得�?��非置顶帖�?
 	 * 
 	 * @return
 	 */
@@ -123,7 +123,7 @@ public class PostDaoImpl {
 	}
 
 	/**
-	 * 获得�?��置顶帖子
+	 * 获得�?��置顶帖子
 	 * 
 	 * @return
 	 */
@@ -189,7 +189,7 @@ public class PostDaoImpl {
 	}
 
 	/**
-	 * 增加�?��评论
+	 * 增加�?��评论
 	 * 
 	 * @param comment
 	 * @return
@@ -200,7 +200,7 @@ public class PostDaoImpl {
 			conn = DBConnection.getConn();
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, comment.getPostId());
-			ps.setString(2, comment.getComment_content());
+			ps.setString(2, comment.getComment());
 			ps.setString(3, comment.getCommentTime());
 			ps.setString(4, comment.getAuthor());
 			ps.setString(5, comment.getOpenId());
@@ -215,7 +215,7 @@ public class PostDaoImpl {
 	}
 
 	/**
-	 * 评论�?1操作
+	 * 评论�?1操作
 	 * 
 	 * @return
 	 */
@@ -236,7 +236,7 @@ public class PostDaoImpl {
 	}
 
 	/**
-	 * weixin_post和weixin_love表中增加�?��点赞�?
+	 * weixin_post和weixin_love表中增加�?��点赞�?
 	 * 
 	 * @param postId
 	 * @return
@@ -323,7 +323,7 @@ public class PostDaoImpl {
 	}
 
 	/**
-	 * 取得帖子的所有评�?
+	 * 取得帖子的所有评�?
 	 * 
 	 * @param postId
 	 * @return
@@ -339,7 +339,7 @@ public class PostDaoImpl {
 			while (rs.next()) {
 				Comment comment = new Comment();
 				comment.setAuthor(rs.getString("author"));
-				comment.setComment_content(rs.getString("comment"));
+				comment.setComment(rs.getString("comment"));
 				comment.setCommentTime(rs.getString("commentTime"));
 				comment.setHeadImgUrl(rs.getString("headImgUrl"));
 				comment.setOpenId(rs.getString("openId"));
@@ -354,7 +354,7 @@ public class PostDaoImpl {
 	}
 
 	/**
-	 * 关闭数据�?
+	 * 关闭数据�?
 	 */
 	public void closeDB() {
 		if (rs != null) {

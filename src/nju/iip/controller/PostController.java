@@ -3,17 +3,15 @@ package nju.iip.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.sf.json.JSONObject;
 import nju.iip.dao.PostDao;
+import nju.iip.dto.Love;
 import nju.iip.dto.Post;
 import nju.iip.dto.WeixinUser;
 import nju.iip.service.OAuthService;
 import nju.iip.util.CommonUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,15 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class PostController {
-	
-	private static PostDao PD = new PostDao();
+
+	private static PostDao postdao = new PostDao();
 
 	private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
 	@RequestMapping(value = "/post_list")
 	public String showPostList(HttpServletRequest request) {
 		logger.info("showPostList called");
-		OAuthService.getUerInfo(request);//获取用户信息
+		OAuthService.getUerInfo(request);// 获取用户信息
 		return "post_list.jsp";
 	}
 
@@ -38,13 +36,14 @@ public class PostController {
 	 * 
 	 * @param request
 	 * @param response
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@RequestMapping(value = "/GetMorePosts")
-	public void getMorePost(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	public void getMorePost(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
 		String count = request.getParameter("count");
 		logger.info("count=" + count);
-		List<Post> post_list = PD.getAllPostLimit(Integer.valueOf(count) * 10);
+		List<Post> post_list = postdao.getAllPostLimit(Integer.valueOf(count) * 10);
 		JSONObject json = new JSONObject();
 		json.put("post", post_list);
 		logger.info("json=" + json.toString());
@@ -53,30 +52,49 @@ public class PostController {
 		out.flush();
 		out.close();
 	}
-	
+
 	@RequestMapping(value = "/ShowPost")
 	public String showPost(HttpServletRequest request) {
 		logger.info("showPost called");
 		String postId = request.getParameter("id");
-		logger.info("postId="+postId);
-		Post post = PD.getPostById(Integer.valueOf(postId));
+		logger.info("postId=" + postId);
+		Post post = postdao.getPostById(Integer.valueOf(postId));
 		request.setAttribute("post", post);
 		request.getSession().setAttribute("postId", postId);
 		return "post.jsp";
 	}
-	
+
 	@RequestMapping(value = "/SavePost")
-	public void savePost(HttpServletRequest request,HttpServletResponse response,Post post) throws IOException {
+	public void savePost(HttpServletRequest request,
+			HttpServletResponse response, Post post) throws IOException {
 		logger.info("savePost called");
-		logger.info("title=" +post.getTitle() + " content=" + post.getContent()+" picture_url="+post.getPictureUrl());
+		logger.info("title=" + post.getTitle() + " content="+ post.getContent() + " pictureUrl=" + post.getPictureUrl());
 		WeixinUser user = (WeixinUser) request.getSession().getAttribute("snsUserInfo");
 		post.setAuthor(user.getNickname());
 		post.setHeadImgUrl(user.getHeadImgUrl());
 		post.setPostTime(CommonUtil.getTime());
 		post.setOpenId(user.getOpenId());
-		PD.savePost(post);
+		postdao.savePost(post);
 		PrintWriter out = response.getWriter();
 		out.write("发帖成功!");
+	}
+
+	@RequestMapping(value = "/AddLike")
+	public void addLike(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		logger.info("addLike called");
+		String postId = request.getParameter("id");
+		logger.info("postId=" + postId);
+		WeixinUser user = (WeixinUser) request.getSession().getAttribute("snsUserInfo");
+		Love love = new Love();
+		love.setPostId(Integer.valueOf(postId));
+		love.setOpenId(user.getOpenId());
+		love.setHeadImgUrl(user.getHeadImgUrl());
+		love.setLoveTime(CommonUtil.getTime());
+		love.setAuthor(user.getNickname());
+		postdao.addLike(love);
+		PrintWriter out = response.getWriter();
+		out.write("success!");
+		
 	}
 
 }
