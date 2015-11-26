@@ -33,9 +33,6 @@ public class PostDao extends DAO{
 			rollback();
 			logger.info("PostDao-->getAllPostLimit",e);
 		}
-		finally{
-			close();
-		}
 		return list;
 	}
 	
@@ -53,9 +50,6 @@ public class PostDao extends DAO{
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->getAllUpPost",e);
-		}
-		finally{
-			close();
 		}
 		return list;
 	}
@@ -77,9 +71,6 @@ public class PostDao extends DAO{
 			rollback();
 			logger.info("PostDao-->getPostById",e);
 		}
-		finally{
-			close();
-		}
 		return post;
 	}
 	
@@ -96,8 +87,6 @@ public class PostDao extends DAO{
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->savePost",e);
-		}finally{
-			close();
 		}
 	}
 	
@@ -119,8 +108,6 @@ public class PostDao extends DAO{
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->getAllComment",e);
-		}finally{
-			close();
 		}
 		return list;
 	}
@@ -145,8 +132,6 @@ public class PostDao extends DAO{
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->isLove",e);
-		}finally{
-			close();
 		}
 		return flag;
 	}
@@ -169,8 +154,6 @@ public class PostDao extends DAO{
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->addLike",e);
-		}finally{
-			close();
 		}
 	}
 	

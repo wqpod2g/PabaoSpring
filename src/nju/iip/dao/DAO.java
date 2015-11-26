@@ -43,25 +43,20 @@ public class DAO {
 		getSession().beginTransaction().commit();
 	}
 	
+	
 	@SuppressWarnings("unchecked")
-	protected void close() {
-		try {
-			getSession().close();
-		}catch(HibernateException e) {
-			logger.info("close session failed!",e);
-		}
-		
-		DAO.SESSION_LOCAL.set(null);
-	}
-	
-	
 	protected void rollback() {
 		try {
 			getSession().beginTransaction().rollback();
 		}catch(HibernateException e) {
 			logger.info("rollback failed!",e);
 		}
-		
+		try {
+			getSession().close();
+		}catch(HibernateException e) {
+			logger.info("close session failed!",e);
+		}
+		DAO.SESSION_LOCAL.set(null);
 	}
 	
 	
