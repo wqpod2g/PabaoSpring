@@ -16,9 +16,6 @@
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/common.css">
-<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
 </head>
 <body>
 
@@ -132,7 +129,8 @@
 	</div>
 
 </body>
-
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript"> 
 	$(document).ready(function() { 
 		var loved = <%=isLoved%>;
@@ -153,8 +151,6 @@
 			}
 			
 		});
-		
-		
 		
 		//点赞处理逻辑 
 		$("span.glyphicon").click(function() {
@@ -181,14 +177,14 @@
 				$( "span.return_msg").html('<i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;'+'发送中...'); 
 				$.ajax({ 
 					type : 'POST',
-					url : "AddCommentServlet",
+					url : "AddComment",
 					data : { "comment" : comment }, 
 					success : function( msg) { 
 						$( "span.return_msg").html( "<br>" + msg); 
 						
 						setTimeout( function() { 
 							$( ".bs-example-modal-sm").modal( 'hide');
-							location.href = "ShowPostServlet?id=" + <%=post.getId()%> ; 
+							location.href = "ShowPost?id=" + <%=post.getId()%> ; 
 							}, 2000); 
 						} 
 					}); 

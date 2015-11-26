@@ -16,10 +16,6 @@
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/common.css">
-<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/lrz.mobile.min.js"></script>
-<script src="js/post.js"></script>
 </head>
 <body>
 	<div id="contain">
@@ -160,14 +156,9 @@
 			</button>
 		</div>
 	</nav>
-
-
-
-
-	<script type="text/javascript">
-		
-	</script>
-
-
 </body>
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/lrz.mobile.min.js"></script>
+<script src="js/post.js"></script>
 </html>

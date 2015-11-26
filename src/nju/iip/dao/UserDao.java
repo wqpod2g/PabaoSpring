@@ -56,6 +56,25 @@ public class UserDao extends DAO{
 		}
 	}
 	
+	/**
+	 * 根据openId获得用户的信息
+	 * @param openId
+	 * @return
+	 */
+	public  WeixinUser getUser(String openId) {
+		WeixinUser user = null;
+		try{
+			begin();
+			Query query = getSession().createQuery("from WeixinUser where openId=:openId");
+			query.setString("openId", openId);
+			user = (WeixinUser)query.uniqueResult();
+		}catch (HibernateException e) {
+			rollback();
+			logger.info("UserDao-->getUser",e);
+		}
+		return user;
+	}
+	
 	
 	public static void main(String[] args) {
 		UserDao ud = new UserDao();

@@ -104,7 +104,6 @@ public class PostDao extends DAO{
 			Query query = getSession().createQuery("from Comment where postId=:postId order by id desc");
 			query.setInteger("postId", postId);
 			list = query.list();
-			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->getAllComment",e);
@@ -125,7 +124,6 @@ public class PostDao extends DAO{
 			query.setString("openId",openId);
 			query.setInteger("postId", postId);
 			Love love = (Love)query.uniqueResult();
-			commit();
 			if(love!=null) {
 				flag = true;
 			}
@@ -149,6 +147,8 @@ public class PostDao extends DAO{
 			Query query = getSession().createQuery("update Post p set p.love = p.love+1 where id=:id");
 			query.setInteger("id", love.getPostId());
 			query.executeUpdate();
+			commit();
+			begin();
 			getSession().save(love);
 			commit();
 		}catch (HibernateException e) {
@@ -157,7 +157,26 @@ public class PostDao extends DAO{
 		}
 	}
 	
-	
+	/**
+	 * 增加评论
+	 * 
+	 * @param comment
+	 * @return
+	 */
+	public boolean addComment(Comment comment) {
+		boolean flag = false;
+		try{
+			begin();
+			getSession().save(comment);
+			commit();
+			flag = true;
+		}catch (HibernateException e) {
+			rollback();
+			logger.info("PostDao-->addComment",e);
+			flag = false;
+		}
+		return flag;
+	}
 	
 	public static void main(String[] args) {
 		PostDao pd = new PostDao();

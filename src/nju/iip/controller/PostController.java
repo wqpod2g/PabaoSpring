@@ -3,15 +3,19 @@ package nju.iip.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import net.sf.json.JSONObject;
 import nju.iip.dao.PostDao;
+import nju.iip.dto.Comment;
 import nju.iip.dto.Love;
 import nju.iip.dto.Post;
 import nju.iip.dto.WeixinUser;
 import nju.iip.service.OAuthService;
 import nju.iip.util.CommonUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -94,7 +98,28 @@ public class PostController {
 		postdao.addLike(love);
 		PrintWriter out = response.getWriter();
 		out.write("success!");
-		
+	}
+	
+	@RequestMapping(value = "/AddComment")
+	public void AddComment(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		String comment = request.getParameter("comment");
+		String postId = (String)request.getSession().getAttribute("postId");
+		WeixinUser user = (WeixinUser)request.getSession().getAttribute("snsUserInfo");
+		logger.info("来自"+user.getNickname()+"的评论"+"comment="+comment+ "   postId="+postId);
+		Comment com= new Comment();
+		com.setComment(comment);
+		com.setAuthor(user.getNickname());
+		com.setHeadImgUrl(user.getHeadImgUrl());
+		com.setOpenId(user.getOpenId());
+		com.setPostId(Integer.valueOf(postId));
+		com.setCommentTime(CommonUtil.getTime());
+		PrintWriter out = response.getWriter();
+		if(postdao.addComment(com)) {
+			out.write("success!");
+		}
+		else{
+			out.write("falied!");
+		}
 	}
 
 }
