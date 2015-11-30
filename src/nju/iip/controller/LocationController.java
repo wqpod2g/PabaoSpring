@@ -15,7 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+/**
+ * 用户地理位置坐标处理
+ * @author wangqiang
+ *
+ */
 @Controller
 public class LocationController {
 	

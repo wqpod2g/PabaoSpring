@@ -26,20 +26,19 @@ body,html,#allmap {
 	href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/common.css">
-<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-<script src="js/mui.min.js"></script>
-<script type="text/javascript"
-	src="http://api.map.baidu.com/api?type=quick&ak=M8xS2NSEYa4amEnURlA8icFg&v=1.0"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <title>查看附近的人</title>
 
 <%
 	String str = (String) request.getAttribute("location_json");
-	String openId = (String) request.getSession()
-			.getAttribute("openId");
+	String openId = (String) request.getSession().getAttribute("openId");
 %>
-
-
+</head>
+<body>
+	<div id="allmap"></div>
+</body>
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="http://api.map.baidu.com/api?type=quick&ak=M8xS2NSEYa4amEnURlA8icFg&v=1.0"></script>
 <script type="text/javascript">
 	$(document)
 			.ready(
@@ -55,8 +54,8 @@ body,html,#allmap {
 						// 百度地图API功能
 						var map = new BMap.Map("allmap");
 						map.centerAndZoom(new BMap.Point(
-								center.Longitude,
-								center.Latitude), 11);
+								center.longitude,
+								center.latitude), 11);
 						map.addControl(new BMap.ZoomControl()); //添加地图缩放控件
 
 						//var Point = [], marker = [], infoWindow = [];
@@ -77,8 +76,8 @@ body,html,#allmap {
 									url = '<a href="MyHomePage.jsp';
 								}
 								var Point = new BMap.Point(
-										init.location[i].Longitude,
-										init.location[i].Latitude);
+										init.location[i].longitude,
+										init.location[i].latitude);
 								var marker = new BMap.Marker(Point);
 								var opts = {
 									width : 100, // 信息窗口宽度
@@ -106,9 +105,5 @@ body,html,#allmap {
 						}
 					});
 </script>
-</head>
-<body>
-	<div id="allmap"></div>
-</body>
 </html>
 

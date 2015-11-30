@@ -19,5 +19,6 @@
 		<property name="headImgUrl" column="headImgUrl" type="string" />
 		<property name="sex" column="sex" type="int" />
 		<property name="phone" column="phone" type="string" />
+		<property name="name" column="name" type="string" />
 	</class>
 </hibernate-mapping>

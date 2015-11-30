@@ -77,10 +77,33 @@ public class UserDao extends DAO{
 		return user;
 	}
 	
+	public boolean updateUserInfo(WeixinUser user) {
+		boolean flag = false;
+		try{
+			begin();
+			Query query = getSession().createQuery("update WeixinUser w set w.name=:name,w.phone=:phone where openId=:openId");
+			query.setString("name", user.getName());
+			query.setString("phone", user.getPhone());
+			query.setString("openId", user.getOpenId());
+			if(query.executeUpdate()==1) {
+				flag = true;
+			}
+			commit();
+		}catch (HibernateException e) {
+			rollback();
+			logger.info("UserDao-->updateUserInfo",e);
+		}
+		return flag;
+	}
+	
 	
 	public static void main(String[] args) {
 		UserDao ud = new UserDao();
-		logger.info(ud.checkBind("o9goJv0zM7MSaU58C8ZFkH0NrsF")+"");
+		WeixinUser user = new WeixinUser();
+		user.setOpenId("o9goJv0zM7MSaU58C8ZFkH0NrsFk");
+		user.setName("wq");
+		user.setPhone("123");
+		logger.info(ud.updateUserInfo(user)+"");
 	}
 
 }
