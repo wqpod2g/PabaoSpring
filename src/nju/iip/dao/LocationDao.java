@@ -2,6 +2,7 @@ package nju.iip.dao;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import nju.iip.dto.UserLocation;
 
@@ -60,14 +61,28 @@ public class LocationDao extends DAO {
 		}
 	}
 	
+	/**
+	 * 获取所有用户的坐标信息
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<UserLocation> getAllUserLocation() {
+		List<UserLocation> list = null;
+		try{
+			begin();
+			Query query = getSession().createQuery("from UserLocation");
+			list = query.list();
+			commit();
+		}catch (HibernateException e) {
+			rollback();
+			logger.info("LocationDao-->getAllUserLocation",e);
+		}
+		return list;
+	}
 	
 	public static void main(String[] args) {
 		LocationDao ld = new LocationDao();
-		UserLocation location = new UserLocation();
-		location.setLatitude("1");
-		location.setLongitude("0");
-		location.setOpenId("wq");
-		ld.updateUserLocation(location);
+		System.out.println(ld.getAllUserLocation().size());
 	}
 
 }

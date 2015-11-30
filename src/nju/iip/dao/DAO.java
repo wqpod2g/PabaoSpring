@@ -40,7 +40,13 @@ public class DAO {
 	}
 	
 	protected void commit() {
-		getSession().beginTransaction().commit();
+		getSession().getTransaction().commit();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void close(){
+		getSession().close();
+		DAO.SESSION_LOCAL.set(null);
 	}
 	
 	

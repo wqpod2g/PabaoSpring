@@ -29,6 +29,7 @@ public class PostDao extends DAO{
 			begin();
 			Query query = getSession().createQuery("from Post where isUp=0 order by id desc").setFirstResult(n).setMaxResults(10);
 			list = query.list();
+			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->getAllPostLimit",e);
@@ -47,6 +48,7 @@ public class PostDao extends DAO{
 			begin();
 			Query query = getSession().createQuery("from Post where isUp=1 order by id desc");
 			list = query.list();
+			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->getAllUpPost",e);
@@ -67,6 +69,7 @@ public class PostDao extends DAO{
 			Query query = getSession().createQuery("from Post where id=:id");
 			query.setInteger("id", id);
 			post = (Post)query.uniqueResult();
+			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->getPostById",e);
@@ -104,6 +107,7 @@ public class PostDao extends DAO{
 			Query query = getSession().createQuery("from Comment where postId=:postId order by id desc");
 			query.setInteger("postId", postId);
 			list = query.list();
+			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->getAllComment",e);
@@ -127,6 +131,7 @@ public class PostDao extends DAO{
 			if(love!=null) {
 				flag = true;
 			}
+			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->isLove",e);

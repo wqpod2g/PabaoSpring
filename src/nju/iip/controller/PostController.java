@@ -63,6 +63,7 @@ public class PostController {
 		String postId = request.getParameter("id");
 		logger.info("postId=" + postId);
 		Post post = postdao.getPostById(Integer.valueOf(postId));
+		logger.info("like="+post.getLove());
 		request.setAttribute("post", post);
 		request.getSession().setAttribute("postId", postId);
 		return "post.jsp";

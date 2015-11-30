@@ -26,6 +26,7 @@ public class UserDao extends DAO{
 			Query query = getSession().createQuery("from WeixinUser where openId=:openId");
 			query.setString("openId", openId);
 			WeixinUser user = (WeixinUser)query.uniqueResult();
+			commit();
 			if(user!=null) {
 				flag = true;
 			}
@@ -68,6 +69,7 @@ public class UserDao extends DAO{
 			Query query = getSession().createQuery("from WeixinUser where openId=:openId");
 			query.setString("openId", openId);
 			user = (WeixinUser)query.uniqueResult();
+			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("UserDao-->getUser",e);
