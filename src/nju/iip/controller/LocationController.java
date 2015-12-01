@@ -2,8 +2,10 @@ package nju.iip.controller;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import nju.iip.dao.LocationDao;
@@ -11,8 +13,10 @@ import nju.iip.dao.UserDao;
 import nju.iip.dto.UserLocation;
 import nju.iip.dto.WeixinUser;
 import nju.iip.service.OAuthService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 /**
@@ -25,8 +29,11 @@ public class LocationController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LocationController.class);
 	
-	private static LocationDao locationDao = new LocationDao();
-	private static UserDao userDao = new UserDao();
+	@Autowired
+	private LocationDao locationDao;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	@RequestMapping(value = "/nearby_show")
 	public String showNearby(HttpServletRequest request,HttpServletResponse response) throws IOException {

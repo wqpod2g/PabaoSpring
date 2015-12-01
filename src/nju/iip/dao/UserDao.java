@@ -9,7 +9,9 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserDao extends DAO{
 	
 	private static final Logger logger = LoggerFactory.getLogger(PostDao.class);
