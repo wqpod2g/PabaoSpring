@@ -45,8 +45,7 @@ public class PostController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/GetMorePosts")
-	public void getMorePost(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	public void getMorePost(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		String count = request.getParameter("count");
 		logger.info("count=" + count);
 		List<Post> post_list = postdao.getAllPostLimit(Integer.valueOf(count) * 10);
@@ -72,8 +71,7 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/SavePost")
-	public void savePost(HttpServletRequest request,
-			HttpServletResponse response, Post post) throws IOException {
+	public void savePost(HttpServletRequest request,HttpServletResponse response, Post post) throws IOException {
 		logger.info("savePost called");
 		logger.info("title=" + post.getTitle() + " content="+ post.getContent() + " pictureUrl=" + post.getPictureUrl());
 		WeixinUser user = (WeixinUser) request.getSession().getAttribute("snsUserInfo");

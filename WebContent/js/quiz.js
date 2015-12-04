@@ -5,7 +5,7 @@
             startImg: 'images/start.gif',
             endText: '已结束!',
             shortURL: null,
-            sendResultsURL: "RecordAnswerServlet",
+            sendResultsURL: "SaveEvaluateResult",
             resultComments: {
                 perfect: '你是爱因斯坦么?',
                 excellent: '非常优秀!',

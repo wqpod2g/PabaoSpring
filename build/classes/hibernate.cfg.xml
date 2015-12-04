@@ -34,6 +34,6 @@
    <mapping resource="nju/iip/dto/UserLocation.hbm.xml"/>
    <mapping resource="nju/iip/dto/Comment.hbm.xml"/>
    <mapping resource="nju/iip/dto/Love.hbm.xml"/>
-   
+   <mapping resource="nju/iip/dto/Scale.hbm.xml"/>
 </session-factory>
 </hibernate-configuration>
