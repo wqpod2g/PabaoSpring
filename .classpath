@@ -41,5 +41,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web-3.2.9.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-3.2.9.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/c3p0-0.9.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jedis-2.1.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-pool-1.5.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -2,9 +2,9 @@ package nju.iip.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 
 import nju.iip.util.Config;
 
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class ConnectionPool {
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(ConnectionPool.class);
 
 	private int max_connection = Integer.valueOf(Config.getValue("max_connection"));// 最大连接数
@@ -29,8 +29,6 @@ public class ConnectionPool {
 
 	private static ConnectionPool connectPool;// 单例
 	
-	private int waitTime = 100;
-
 	private ConnectionPool() {
 		logger.info("创建连接池....");
 		intializePool();
@@ -57,7 +55,7 @@ public class ConnectionPool {
 		if (connection_map != null) {
 			return;
 		}
-		connection_map = new ConcurrentHashMap<Connection,String>();
+		connection_map = new HashMap<Connection,String>();
 		try {
 			for (int i = 0; i < min_connection; i++) {
 				connection_map.put(getNewConnection(),"free");
@@ -82,7 +80,7 @@ public class ConnectionPool {
 	 * 获取一个连接
 	 * @return
 	 */
-	public  Connection getConnection() {
+	public synchronized Connection getConnection() {
 		Connection conn = null;
 		for (Entry<Connection, String> entry : connection_map.entrySet()) {
 			if (entry.getValue().equals("free")) {
@@ -99,7 +97,11 @@ public class ConnectionPool {
 			} 
 			else {
 				logger.info("reach max_connction!start watting...");
-                wait(waitTime);
+				try{
+					this.wait();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
                 conn = getConnection();
             }
 		}
@@ -123,6 +125,7 @@ public class ConnectionPool {
 				 else{
 	                 connection_map.put(conn,"free");   
 	                 logger.info("releaseConnection ok...");
+	                 this.notify();
 				 }
 	         } 
 			 else {
@@ -132,12 +135,5 @@ public class ConnectionPool {
 			 logger.info("releaseConnection error", e);
 		 }
 	 }
-	
-	public void wait(int waitTime) {
-		try{
-			Thread.sleep(waitTime);
-		}catch(Exception e){
-			logger.info("wait error", e);
-		}
-	}
+
 }
