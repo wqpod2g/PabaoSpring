@@ -1,2 +1,2 @@
 # PabaoSpring
-Spring+Hibernate重构帕宝项目！
+Spring+Hibernate+redis重构帕宝项目！
