@@ -12,9 +12,7 @@
 </head>
 <body>
 	<%
-		UserDao UD = new UserDao();
-		String openId = (String) request.getSession().getAttribute("openId");
-		WeixinUser user = UD.getUser(openId);
+		WeixinUser user = (WeixinUser)request.getSession().getAttribute("user");
 	%>
 	<div class="bgfff form ov" style="width: 100%; margin-top: 1px;">
 		<div style="margin: 0 auto 0 40%">

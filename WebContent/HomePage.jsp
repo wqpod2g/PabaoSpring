@@ -93,13 +93,14 @@
 						<label for="message-text" class="control-label">内容:</label>
 						<textarea class="form-control" id="message-text" name="message"></textarea>
 					</div>
-					
-					<div >
+					<!--  
+					<div>
 					<input id="upload" type="file" style="display:none">
                     <button type="button" class="btn btn-info"  onclick="$('input[id=upload]').click();" >
                      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>添加图片
                      </button>
                     </div>
+                    -->
                     <div style="margin: 5px"></div>
                     <div><img id="pic"  src="" width="40%"></div>
                      <div style="margin: 5px"></div>
@@ -138,6 +139,8 @@
 <script src="js/lrz.mobile.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+	 	var basePath = window.location.protocol+"//"+window.location.host;
+       	var pic_server_url = basePath+"/Pictures/";
 		var nickName = '<%=user.getNickname()%>';
 		var OpenId = '<%=openId%>';
 		$("title").html(nickName + "的主页");
@@ -150,6 +153,7 @@
 		
 		 var reader = new FileReader();
 		    var picture = '';
+		    var pictureUrl = '';
 		    $('input#upload').change(function(){
 		    	 if (this.files && this.files[0]) {
 		             // reader.readAsDataURL(this.files[0]);
@@ -179,8 +183,19 @@
 		    	        done: function (results) {
 		    	              // 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
 		    	              console.log(results); 
-		    	              $("img#pic").attr('src', results.base64).addClass("img-thumbnail");
 		    	              picture =  results.base64;
+		    	              $.ajax({
+		    	            	  type: "POST",
+		    	            	  url: pic_server_url+"SavePictureServlet",
+		    	            	  data: {
+		    	            		  "picture" : picture
+		    	            	  },
+		    	            	  success: function(msg) {
+		    	            		  pictureUrl = msg;
+		    	            		  $("img#pic").attr('src', results.base64).addClass("img-thumbnail");
+		    	            	  }
+		    	            	  
+		    	              });
 		    	        }
 		    	    });  
 		         }
@@ -199,12 +214,12 @@
 				$("div#progress-bar").html("10%");
 				$.ajax({
 					type : 'POST',
-					url : "MessageServlet",
+					url : "ReceiveMessage",
 					data : {
-						"message" : message,
-						"ToOpenId" : OpenId,
-						"ToNickname" : nickName,
-						"picture" : picture
+						"content" : message,
+						"toOpenId" : OpenId,
+						"toNickName" : nickName,
+						"pictureUrl" : pictureUrl
 					},
 					success : function(msg) {
 						$("div#progress-bar").html("100%").attr("aria-valuenow","100").attr("style","width:100%;");

@@ -174,6 +174,11 @@ public class PostDao extends DAO{
 			begin();
 			getSession().save(comment);
 			commit();
+			begin();
+			Query query = getSession().createQuery("update Post p set p.reply = p.reply+1 where id=:id");
+			query.setInteger("id", comment.getPostId());
+			query.executeUpdate();
+			commit();
 			flag = true;
 		}catch (HibernateException e) {
 			rollback();

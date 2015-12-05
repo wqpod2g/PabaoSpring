@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import nju.iip.dao.UserDao;
 import nju.iip.dto.WeixinUser;
+import nju.iip.service.OAuthService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +49,21 @@ public class UserInfoController {
 			out.write("修改失败！");
 			logger.info("update falied!");
 		}
-
+	}
+	
+	/**
+	 * 显示用户主页
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/show_homepage")
+	public String showHomePage(HttpServletRequest request) {
+		OAuthService.getUerInfo(request);// 获取用户信息
+		WeixinUser snsUserInfo = (WeixinUser)request.getSession().getAttribute("snsUserInfo");
+		String openId = snsUserInfo.getOpenId();
+		WeixinUser user = userDao.getUser(openId);
+		request.getSession().setAttribute("user", user);
+		return "MyHomePage.jsp";
 	}
 
 }

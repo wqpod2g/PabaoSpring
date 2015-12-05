@@ -57,6 +57,7 @@ public class LocationDao extends DAO {
     		begin();
     		getSession().saveOrUpdate(location);
     		commit();
+    		getSession().clear();
     	}catch (HibernateException e) {
 			rollback();
 			logger.info("LocationDao-->updateUserLocation",e);
