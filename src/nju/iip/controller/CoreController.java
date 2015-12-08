@@ -15,6 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * 服务器配置以及微信会话相关控制类
+ * @author wangqiang
+ *
+ */
 @Controller
 public class CoreController {
 

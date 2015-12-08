@@ -16,6 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * 用户信息相关控制类
+ * @author wangqiang
+ *
+ */
 @Controller
 public class UserInfoController {
 	

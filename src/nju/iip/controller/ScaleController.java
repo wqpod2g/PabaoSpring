@@ -25,6 +25,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import redis.clients.jedis.Jedis;
 
+/**
+ * 量表相关控制类
+ * @author wangqiang
+ *
+ */
 @Controller
 public class ScaleController {
 
