@@ -28,6 +28,8 @@ public class LocationDao extends DAO {
 		boolean flag = false;
 		try{
 			begin();
+			getSession().flush();
+			getSession().clear();
 			Query query = getSession().createQuery("from UserLocation where openId=:openId");
 			query.setString("openId", openId);
 			UserLocation location = (UserLocation)query.uniqueResult();
@@ -55,9 +57,10 @@ public class LocationDao extends DAO {
     	location.setTime(time);
     	try{
     		begin();
+    		getSession().flush();
+			getSession().clear();
     		getSession().saveOrUpdate(location);
     		commit();
-    		getSession().clear();
     	}catch (HibernateException e) {
 			rollback();
 			logger.info("LocationDao-->updateUserLocation",e);
@@ -73,6 +76,8 @@ public class LocationDao extends DAO {
 		List<UserLocation> list = null;
 		try{
 			begin();
+			getSession().flush();
+			getSession().clear();
 			Query query = getSession().createQuery("from UserLocation");
 			list = query.list();
 			commit();

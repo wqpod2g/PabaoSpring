@@ -41,11 +41,12 @@ public class MessageDao extends DAO {
 		List<Message> list = null;
 		try {
 			begin();
+			getSession().flush();
+			getSession().clear();
 			Query query = getSession().createQuery(
 					"from Message where toOpenId=:toOpenId");
 			query.setString("toOpenId", openId);
 			list = query.list();
-			commit();
 		} catch (HibernateException e) {
 			rollback();
 			logger.info("MessageDao-->getMessage failed", e);

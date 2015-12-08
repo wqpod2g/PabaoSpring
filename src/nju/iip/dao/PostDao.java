@@ -27,9 +27,10 @@ public class PostDao extends DAO{
 		List<Post> list = null;
 		try{
 			begin();
+			getSession().flush();
+			getSession().clear();
 			Query query = getSession().createQuery("from Post where isUp=0 order by id desc").setFirstResult(n).setMaxResults(10);
 			list = query.list();
-			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->getAllPostLimit",e);
@@ -46,9 +47,10 @@ public class PostDao extends DAO{
 		List<Post> list = null;
 		try{
 			begin();
+			getSession().flush();
+			getSession().clear();
 			Query query = getSession().createQuery("from Post where isUp=1 order by id desc");
 			list = query.list();
-			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->getAllUpPost",e);
@@ -66,10 +68,11 @@ public class PostDao extends DAO{
 		Post post = null;
 		try{
 			begin();
+			getSession().flush();
+			getSession().clear();
 			Query query = getSession().createQuery("from Post where id=:id");
 			query.setInteger("id", id);
 			post = (Post)query.uniqueResult();
-			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->getPostById",e);
@@ -104,10 +107,11 @@ public class PostDao extends DAO{
 		List<Comment> list = null;
 		try{
 			begin();
+			getSession().flush();
+			getSession().clear();
 			Query query = getSession().createQuery("from Comment where postId=:postId order by id desc");
 			query.setInteger("postId", postId);
 			list = query.list();
-			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->getAllComment",e);
@@ -124,6 +128,8 @@ public class PostDao extends DAO{
 		boolean flag = false;
 		try{
 			begin();
+			getSession().flush();
+			getSession().clear();
 			Query query = getSession().createQuery("from Love where openId=:openId and postId=:postId");
 			query.setString("openId",openId);
 			query.setInteger("postId", postId);
@@ -131,7 +137,6 @@ public class PostDao extends DAO{
 			if(love!=null) {
 				flag = true;
 			}
-			commit();
 		}catch (HibernateException e) {
 			rollback();
 			logger.info("PostDao-->isLove",e);
@@ -152,8 +157,6 @@ public class PostDao extends DAO{
 			Query query = getSession().createQuery("update Post p set p.love = p.love+1 where id=:id");
 			query.setInteger("id", love.getPostId());
 			query.executeUpdate();
-			commit();
-			begin();
 			getSession().save(love);
 			commit();
 		}catch (HibernateException e) {
@@ -173,8 +176,6 @@ public class PostDao extends DAO{
 		try{
 			begin();
 			getSession().save(comment);
-			commit();
-			begin();
 			Query query = getSession().createQuery("update Post p set p.reply = p.reply+1 where id=:id");
 			query.setInteger("id", comment.getPostId());
 			query.executeUpdate();

@@ -25,10 +25,11 @@ public class UserDao extends DAO{
 		boolean flag = false;
 		try{
 			begin();
+			getSession().flush();
+			getSession().clear();
 			Query query = getSession().createQuery("from WeixinUser where openId=:openId");
 			query.setString("openId", openId);
 			WeixinUser user = (WeixinUser)query.uniqueResult();
-			commit();
 			if(user!=null) {
 				flag = true;
 			}
@@ -68,6 +69,8 @@ public class UserDao extends DAO{
 		WeixinUser user = null;
 		try{
 			begin();
+			getSession().flush();
+			getSession().clear();
 			Query query = getSession().createQuery("from WeixinUser where openId=:openId");
 			query.setString("openId", openId);
 			user = (WeixinUser)query.uniqueResult();

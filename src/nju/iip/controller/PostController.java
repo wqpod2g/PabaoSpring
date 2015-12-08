@@ -75,6 +75,9 @@ public class PostController {
 		logger.info("savePost called");
 		logger.info("title=" + post.getTitle() + " content="+ post.getContent() + " pictureUrl=" + post.getPictureUrl());
 		WeixinUser user = (WeixinUser) request.getSession().getAttribute("snsUserInfo");
+		if(post.getPictureUrl().length()==0) {
+			post.setPictureUrl(null);
+		}
 		post.setAuthor(user.getNickname());
 		post.setHeadImgUrl(user.getHeadImgUrl());
 		post.setPostTime(CommonUtil.getTime());
