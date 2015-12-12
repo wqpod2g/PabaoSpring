@@ -24,8 +24,6 @@ body,html,#allmap {
 </style>
 <link rel="stylesheet"
 	href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/common.css">
 <title>查看附近的人</title>
 
 <%
