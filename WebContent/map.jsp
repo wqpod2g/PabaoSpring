@@ -11,11 +11,9 @@ body,html,#allmap {
 	overflow: hidden;
 	margin: 0;
 }
-
 #golist {
 	display: none;
 }
-
 @media ( max-device-width : 780px) {
 	#golist {
 		display: block !important;
