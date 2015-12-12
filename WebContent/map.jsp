@@ -71,7 +71,7 @@ body,html,#allmap {
 									url = '<a href="HomePage.jsp?openId='+openId;
 								}
 								else {
-									url = '<a href="MyHomePage.jsp';
+									url = '<a href="show_homepage';
 								}
 								var Point = new BMap.Point(
 										init.location[i].Longitude,
