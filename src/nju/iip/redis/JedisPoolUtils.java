@@ -65,7 +65,12 @@ public class JedisPoolUtils {
 	 * @return
 	 */
 	public Jedis getJedis() {
-		return pool.getResource();
+		try{
+			return pool.getResource();
+		}catch(Exception e) {
+			logger.info("getJedis error",e);
+		}
+		return null;
 	}
 	
 	 /**
@@ -74,8 +79,12 @@ public class JedisPoolUtils {
      * @param jedis
      */
     public void returnRes(Jedis jedis) {
-        pool.returnResource(jedis);
-        logger.info("release redis connection ok");
+    	try{
+    		pool.returnResource(jedis);
+    	    logger.info("release redis connection ok");
+    	}catch(Exception e) {
+			logger.info("returnRes error",e);
+		}
     }
 
 }
